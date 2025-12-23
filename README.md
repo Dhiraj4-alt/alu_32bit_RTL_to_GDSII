@@ -149,8 +149,13 @@ technology-specific standard cells.
 
 ### Synthesis Results
 
-**Gate-Level Netlist**
-![Gate Netlist](docs/gate_level_netlist.png)
+<details>
+<summary><strong>Synthesized Netlist Structure (Expanded View)</strong></summary>
+
+![Synth Netlist Graph](docs/06_synth_netlist_graph.png)
+
+</details>
+
 
 This confirms:
 - successful technology mapping,
