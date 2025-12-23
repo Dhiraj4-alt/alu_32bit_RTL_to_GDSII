@@ -54,12 +54,8 @@ RTL structure and opcode decoding can be visualized here:
 - Opcode decoding:  
   ![Opcode RTL](docs/opecode_RTL.png)
 
----
-
 ### Tools Used
 - RTL compilation & simulation: **Icarus Verilog (`iverilog`)**
-
----
 
 ### Supported Operations
 
@@ -73,8 +69,6 @@ RTL structure and opcode decoding can be visualized here:
 | 101  | NAND |
 | 110  | NOT (Unary on A) |
 | 111  | PASS A |
-
----
 
 ### Key Observations
 - Carry-out is derived using a wider intermediate sum
@@ -95,20 +89,14 @@ Functional verification ensures the RTL behaves correctly **before**
 synthesis and physical design. Only logical correctness is verified at
 this stage.
 
----
-
 ### Methodology
 - A self-written Verilog testbench was used
 - All opcodes were exercised using deterministic test vectors
 - Status flags (zero, carry, overflow) were monitored
 - Waveforms were generated for detailed inspection
 
----
-
 ### Tools Used
 - Waveform viewer: **GTKWave**
-
----
 
 ### Waveform Analysis
 ![GTKWave](docs/Simulation_GTKwave.png)
@@ -139,15 +127,19 @@ Logic synthesis maps the verified RTL into a **gate-level netlist**
 using a technology library. RTL constructs are replaced with
 technology-specific standard cells.
 
----
-
 ### Tools Used
 - Synthesis engine: **Yosys**
 - Target library: **Sky130 standard cell library**
 
----
-
 ### Synthesis Results
+
+**Gate-Level Netlist**
+![Gate Netlist](docs/gate_level_netlist.png)
+
+This confirms:
+- successful technology mapping,
+- exclusive use of Sky130 standard cells,
+- correct translation of arithmetic and logic operations.
 
 <details>
 <summary><strong>Synthesized Netlist Structure (Expanded View)</strong></summary>
@@ -156,23 +148,11 @@ technology-specific standard cells.
 
 </details>
 
-
-This confirms:
-- successful technology mapping,
-- exclusive use of Sky130 standard cells,
-- correct translation of arithmetic and logic operations.
-
----
-
-**Netlist Graph**
-![Netlist Graph](docs/06_synth_netlist_graph.png)
-
 This graph highlights:
 - logic depth,
 - opcode decode fanout,
 - arithmetic datapath complexity.
 
----
 
 **Synthesis Statistics**
 ![Stats](docs/Yosys_stats_01.png)  
@@ -185,8 +165,6 @@ These reports show:
 
 Detailed report:  
 [`01_yosys_stat_summary.txt`](reports/01_yosys_stat_summary.txt)
-
----
 
 ### Key Observations
 - The netlist is fully combinational
@@ -206,8 +184,6 @@ The synthesized netlist is now ready for physical design.
 Floorplanning defines the **physical dimensions** of the design,
 including die area, core area, and utilization.
 
----
-
 ### Floorplan View
 ![Core and Die](docs/Core%20and%20die.png)
 
@@ -215,12 +191,9 @@ What to observe:
 - Die boundary enclosing the design (Green end-end)
 - Core region allocated for standard cells(Blue regions)
 
----
-
 ### Report
 - [`02_floorplan_final.rpt`](reports/02_floorplan_final.rpt)
 
----
 
 ### Key Observations
 - Compact core area suitable for a combinational block
@@ -237,8 +210,6 @@ What to observe:
 Placement assigns exact physical locations to all standard cells while
 optimizing wirelength, congestion, and timing.
 
----
-
 ### Placement Views
 ![Placement 1](docs/CellsPlaced.1.png)  
 ![Placement 2](docs/Cellsplaced2.png)
@@ -248,13 +219,9 @@ What to observe:
 - No dense clusters or congestion hotspots
 - Logical structure preserved spatially
 
----
-
 ### Reports
 - [`3_global_place.rpt`](reports/3_global_place.rpt)
 - [`3_detailed_place.rpt`](reports/3_detailed_place.rpt)
-
----
 
 ### Key Observations
 - Balanced placement prepares the design for CTS and routing
@@ -271,8 +238,6 @@ What to observe:
 Although this design is **fully combinational**, CTS was executed to
 maintain a complete RTL-to-GDSII flow.
 
----
-
 ### Clock View
 ![CTS](docs/final_clocks.webp)
 
@@ -280,12 +245,8 @@ What to observe:
 - Minimal clock infrastructure
 - No clock skew paths due to absence of registers
 
----
-
 ### Report
 - [`4_cts_final.rpt`](reports/4_cts_final.rpt)
-
----
 
 ### Key Observations
 - No launch or capture paths
@@ -303,8 +264,6 @@ What to observe:
 Routing connects all placed cells using available metal layers while
 meeting DRC and electrical constraints.
 
----
-
 ### Routing Views
 ![Routing](docs/final_routing.webp)  
 ![Congestion](docs/final_congestion.webp)
@@ -313,14 +272,10 @@ What to observe:
 - Clean interconnect across metal layers
 - No congestion hotspots (no red regions)
 
----
-
 ### Reports
 - [`5_global_route.rpt`](reports/5_global_route.rpt)
 - [`5_detailed_route.rpt`](reports/5_detailed_route.rpt)
 - [`5_route_drc.rpt`](reports/5_route_drc.rpt)
-
----
 
 ### Key Observations
 - Routing completed without violations
@@ -340,8 +295,6 @@ What to observe:
 These images represent the fully placed and routed design, equivalent
 to the final GDSII database.
 
----
-
 ### Power Integrity
 ![IR Drop](docs/final_ir_drop.webp)
 
@@ -349,13 +302,9 @@ What to observe:
 - Uniform power distribution
 - No critical voltage drop regions
 
----
-
 ### Reports
 - [`3_resizer.rpt`](reports/3_resizer.rpt)
 - [`6_finish.rpt`](reports/6_finish.rpt)
-
----
 
 ### Final Observations
 - WNS = 0, TNS = 0
@@ -367,4 +316,3 @@ The design successfully completes the full **RTL-to-GDSII flow** and
 serves as a solid baseline for future registered or pipelined designs.
 
 </details>
-
