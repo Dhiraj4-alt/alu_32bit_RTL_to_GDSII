@@ -242,7 +242,7 @@ During placement, the following aspects are evaluated:
 
 #### OpenROAD Placement View
 
-![Placement](docs/OpenROAD_docs/Placement%20OpenROAD/3_placement_odb.png)
+![Placement](docs/OpenROAD_docs/Placement OpenROAD/3_place_odb.png)
 
 - The occupied region appears more compact compared to the floorplanning
   stage due to placement optimization and cell redistribution.
